@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KITE • Reliable Cannabis Supply • South Africa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        :root {
+            --green: #0F2E26;
+            --gold: #C9A962;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .premium-shadow {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 70px -15px rgb(15 46 38 / 0.25);
+        }
+
+        .nav-active {
+            color: #C9A962;
+            position: relative;
+        }
+        
+        .nav-active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, #C9A962, transparent);
+        }
+
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.05;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .cannabis-grain {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 fill-opacity=%22003%22%3E%3Cpath d=%22M0 0h100v100H0V0zm50 50c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10z%22/%3E%3C/svg%27');
+            background-size: 120px;
+        }
+
+        .smooth {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .modal {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .cart-slide {
+            animation: cartSlide 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        .product-img {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.08);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #C9A962, #E8D5A3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-scrolled {
+            background: rgba(15, 46, 38, 0.95);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-[#0A1F1A] text-[#E8E4D9] overflow-x-hidden">
+    <!-- NAV -->
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-11 h-11 bg-[#C9A962] flex items-center justify-center rounded-2xl shadow-inner">
+                        <span class="text-[#0F2E26] text-3xl font-black tracking-tighter">K</span>
+                    </div>
+                    <div>
+                        <div class="font-black text-3xl tracking-[-2px]">KITE</div>
+                        <div class="text-[10px] text-[#C9A962] -mt-1 tracking-[2px]">EST 2023 • SOUTH AFRICA</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-x-10 text-sm font-medium">
+                    <a href="#shop" class="hover:text-[#C9A962] transition-colors">Shop</a>
+                    <a href="#cultivars" class="hover:text-[#C9A962] transition-colors">Our Cultivars</a>
+                    <a href="#why" class="hover:text-[#C9A962] transition-colors">Why Kite</a>
+                </div>
+
+                <div class="flex items-center gap-x-4">
+                    <!-- Search -->
+                    <div class="relative w-72 hidden lg:block">
+                        <input type="text" id="search-input" 
+                               class="w-full bg-white/5 border border-white/20 focus:border-[#C9A962] pl-11 py-2.5 rounded-3xl text-sm placeholder:text-white/40 focus:outline-none"
+                               placeholder="Search products or cultivars...">
+                        <i class="fa-solid fa-search absolute left-4 top-3.5 text-white/40"></i>
+                    </div>
+
+                    <!-- Cart -->
+                    <button onclick="showCart()" 
+                            class="flex items-center gap-x-2 px-5 py-2.5 rounded-3xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all active:scale-[0.985]">
+                        <div class="relative">
+                            <i class="fa-solid fa-shopping-bag text-xl"></i>
+                            <div id="cart-count" 
+                                 class="absolute -top-1.5 -right-1.5 w-5 h-5 flex items-center justify-center text-[10px] font-bold bg-[#C9A962] text-[#0F2E26] rounded-full">0</div>
+                        </div>
+                        <span class="font-medium text-sm hidden md:inline">Cart</span>
+                    </button>
+
+                    <!-- Mobile Menu -->
+                    <button class="md:hidden w-11 h-11 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="relative h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <!-- Hero Background -->
+        <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1018/2000/1200')] bg-cover bg-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0A1F1A]/90 via-[#0A1F1A]/70 to-[#0A1F1A]"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(#C9A962_0.8px,transparent_1px)] bg-[length:4px_4px] opacity-10"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl px-6 text-center">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span class="text-xs font-semibold tracking-widest">NOW SHIPPING NATIONWIDE • LICENSED</span>
+            </div>
+            
+            <h1 class="text-7xl md:text-[92px] leading-[0.92] font-black tracking-tighter mb-4">
+                RELIABLE.<br>
+                <span class="gold-gradient">PREMIUM.</span><br>
+                SOUTH AFRICAN.
+            </h1>
+            
+            <p class="max-w-lg mx-auto text-xl text-white/70 mb-10">
+                Premium cannabis products from 11 elite cultivars.<br>
+                Trusted by dispensaries and connoisseurs across the country.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })" 
+                        class="group px-10 py-4 rounded-3xl bg-[#C9A962] hover:bg-[#D8B97A] text-[#0F2E26] font-semibold text-lg flex items-center justify-center gap-x-3 transition-all active:scale-[0.985]">
+                    <span>Shop Now</span>
+                    <i class="fa-solid fa-arrow-right group-active:translate-x-1 transition"></i>
+                </button>
+                
+                <button onclick="document.getElementById('why').scrollIntoView({ behavior: 'smooth' })" 
+                        class="px-9 py-4 rounded-3xl border border-white/30 hover:bg-white/5 font-medium flex items-center justify-center gap-x-2 transition-all">
+                    <span>Learn Our Story</span>
+                </button>
+            </div>
+            
+            <div class="mt-16 flex justify-center gap-x-8 text-xs opacity-60">
+                <div class="flex items-center gap-x-1.5">
+                    <i class="fa-solid fa-check"></i>
+                    <span>11 Cultivars</span>
+                </div>
+                <div class="flex items-center gap-x-1.5">
+                    <i class="fa-solid fa-check"></i>
+                    <span>35+ SKUs</span>
+                </div>
+                <div class="flex items-center gap-x-1.5">
+                    <i class="fa-solid fa-check"></i>
+                    <span>3 Provinces</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
+            <div class="text-[10px] tracking-[2px] mb-1.5 opacity-50">SCROLL TO DISCOVER</div>
+            <i class="fa-solid fa-chevron-down text-lg animate-bounce"></i>
+        </div>
+    </div>
+
+    <!-- WHY KITE -->
+    <div id="why" class="max-w-screen-2xl mx-auto px-8 pt-20 pb-16">
+        <div class="grid md:grid-cols-12 gap-x-8 items-center">
+            <div class="md:col-span-5">
+                <div class="uppercase tracking-[3px] text-xs text-[#C9A962] mb-3">EST. 2023 • MONTAGU, WESTERN CAPE</div>
+                <h2 class="section-header leading-none mb-6">Built for<br>those who<br>demand the best.</h2>
+                
+                <div class="space-y-4 text-white/70 max-w-md">
+                    <p>Kite was founded to solve one problem: inconsistent, unreliable cannabis supply in South Africa.</p>
+                    <p>Today we manage 11 elite cultivars and deliver over 35 premium product variations to the most discerning dispensaries and customers nationwide.</p>
+                </div>
+            </div>
+            
+            <div class="md:col-span-7 mt-10 md:mt-0">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
+                        <div class="text-[#C9A962] text-4xl mb-4"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="font-semibold text-xl mb-2">11 Elite Cultivars</div>
+                        <div class="text-sm text-white/60">Hand-selected genetics from the world’s best breeders, grown with precision in the Cape Winelands.</div>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
+                        <div class="text-[#C9A962] text-4xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="font-semibold text-xl mb-2">Fully Licensed</div>
+                        <div class="text-sm text-white/60">Compliant with all SAHPRA and DALRRD regulations. Every batch tested and traced.</div>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-6">
+                        <div class="text-[#C9A962] text-4xl mb-4"><i class="fa-solid fa-truck-fast"></i></div>
+                        <div class="font-semibold text-xl mb-2">Reliable Supply</div>
+                        <div class="text-sm text-white/60">Consistent quality and volume. We don’t just sell — we partner.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOP SECTION -->
+    <div id="shop" class="max-w-screen-2xl mx-auto px-8 pb-20">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
+            <div>
+                <div class="text-[#C9A962] text-sm tracking-widest font-medium">DISCOVER THE COLLECTION</div>
+                <h2 class="section-header">Signature Products</h2>
+            </div>
+            
+            <!-- Filters -->
+            <div class="flex items-center gap-x-3 mt-6 md:mt-0">
+                <div class="flex bg-white/5 rounded-3xl p-1 text-sm">
+                    <button onclick="filterProducts('all')" class="filter-btn active px-5 py-2 rounded-[22px] font-medium" data-filter="all">All</button>
+                    <button onclick="filterProducts('flower')" class="filter-btn px-5 py-2 rounded-[22px] font-medium" data-filter="flower">Flower</button>
+                    <button onclick="filterProducts('preroll')" class="filter-btn px-5 py-2 rounded-[22px] font-medium" data-filter="preroll">Pre-Rolls</button>
+                    <button onclick="filterProducts('concentrate')" class="filter-btn px-5 py-2 rounded-[22px] font-medium" data-filter="concentrate">Concentrates</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Products populated by JS -->
+        </div>
+    </div>
+
+    <!-- CULTIVARS SECTION -->
+    <div id="cultivars" class="bg-[#0F2E26] py-20">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="text-center mb-12">
+                <div class="text-[#C9A962] text-sm tracking-[3px]">OUR GENETICS</div>
+                <h2 class="section-header mt-2">11 Elite Cultivars.<br>Endless Excellence.</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Cultivar cards -->
+                <div class="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-3xl p-5 group">
+                    <div class="text-[#C9A962] text-xs tracking-widest mb-1">SATIVA • 22% THC</div>
+                    <div class="font-semibold text-xl">Durban Poison</div>
+                    <div class="text-xs text-white/50 mt-1">Classic South African landrace • Uplifting &amp; focused</div>
+                </div>
+                <div class="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-3xl p-5 group">
+                    <div class="text-[#C9A962] text-xs tracking-widest mb-1">INDICA • 19% THC</div>
+                    <div class="font-semibold text-xl">Swazi Gold</div>
+                    <div class="text-xs text-white/50 mt-1">Sweet &amp; earthy • Deep relaxation</div>
+                </div>
+                <div class="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-3xl p-5 group">
+                    <div class="text-[#C9A962] text-xs tracking-widest mb-1">HYBRID • 24% THC</div>
+                    <div class="font-semibold text-xl">Cape Chem</div>
+                    <div class="text-xs text-white/50 mt-1">Our signature cross • Balanced euphoria</div>
+                </div>
+                <div class="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-3xl p-5 group">
+                    <div class="text-[#C9A962] text-xs tracking-widest mb-1">SATIVA • 21% THC</div>
+                    <div class="font-semibold text-xl">Malawi Gold</div>
+                    <div class="text-xs text-white/50 mt-1">Tropical &amp; cerebral • Long-lasting</div>
+                </div>
+                <div class="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-3xl p-5 group">
+                    <div class="text-[#C9A962] text-xs tracking-widest mb-1">INDICA • 18% THC</div>
+                    <div class="font-semibold text-xl">Blue Cheese</div>
+                    <div class="text-xs text-white/50 mt-1">Creamy berry • Powerful body high</div>
+                </div>
+                <div class="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-3xl p-5 group">
+                    <div class="text-[#C9A962] text-xs tracking-widest mb-1">HYBRID • 26% THC</div>
+                    <div class="font-semibold text-xl">Apex OG</div>
+                    <div class="text-xs text-white/50 mt-1">Our flagship • Potent &amp; refined</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10 text-sm text-white/50">
+                + 5 more proprietary crosses available to wholesale partners
+            </div>
+        </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-20">
+        <div class="text-center mb-12">
+            <h2 class="section-header">Loved by the best in the business.</h2>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl">
+                <div class="flex gap-x-1 text-[#C9A962] mb-6">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <div class="italic">"Kite has completely transformed our inventory consistency. Their flower is always fresh, potent, and beautifully packaged."</div>
+                <div class="mt-6 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-xs">JD</div>
+                    <div>
+                        <div class="font-medium">James Dlamini</div>
+                        <div class="text-xs text-white/50">Founder, Green Room Dispensary (CPT)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl">
+                <div class="flex gap-x-1 text-[#C9A962] mb-6">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <div class="italic">"Best pre-rolls in the country. Our customers keep coming back specifically asking for Kite. The quality control is unmatched."</div>
+                <div class="mt-6 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-xs">LM</div>
+                    <div>
+                        <div class="font-medium">Lerato Mokoena</div>
+                        <div class="text-xs text-white/50">Head Buyer, The High Collective (JHB)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl">
+                <div class="flex gap-x-1 text-[#C9A962] mb-6">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <div class="italic">"As a medical dispensary, reliability and lab testing are non-negotiable. Kite delivers on both every single time."</div>
+                <div class="mt-6 flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-xs">DR</div>
+                    <div>
+                        <div class="font-medium">Dr. Thandiwe Nkosi</div>
+                        <div class="text-xs text-white/50">Medical Cannabis SA, Durban</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-8">
+        <div class="max-w-screen-2xl mx-auto px-8 grid md:grid-cols-12 gap-y-12">
+            <div class="md:col-span-5">
+                <div class="flex items-center gap-x-3 mb-4">
+                    <div class="w-9 h-9 bg-[#C9A962] flex items-center justify-center rounded-2xl">
+                        <span class="text-[#0F2E26] text-3xl font-black">K</span>
+                    </div>
+                    <span class="font-black text-3xl tracking-tight">KITE</span>
+                </div>
+                <div class="text-white/60 max-w-xs">Premium cannabis. Reliable supply. Proudly South African.</div>
+                
+                <div class="mt-8 flex gap-x-4 text-xl text-white/60">
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-3">
+                <div class="font-semibold text-sm tracking-widest mb-4">COMPANY</div>
+                <div class="space-y-2 text-sm text-white/70">
+                    <div><a href="#" class="hover:text-white">Our Story</a></div>
+                    <div><a href="#" class="hover:text-white">Cultivation</a></div>
+                    <div><a href="#" class="hover:text-white">Wholesale</a></div>
+                    <div><a href="#" class="hover:text-white">Press</a></div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-4">
+                <div class="font-semibold text-sm tracking-widest mb-4">CONTACT &amp; COMPLIANCE</div>
+                <div class="text-sm text-white/70 space-y-1.5">
+                    <div>Montagu, Western Cape, South Africa</div>
+                    <div>info@kitefarms.co.za</div>
+                    <div>+27 21 123 4567</div>
+                    <div class="pt-3 text-xs">Licensed by SAHPRA &amp; DALRRD • All products third-party tested</div>
+                </div>
+                
+                <div class="mt-8 text-[10px] text-white/40">
+                    © 2026 Kite Farms (Pty) Ltd. For adults 18+. Cannabis products may impair your ability to drive or operate machinery.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" onclick="if (event.target.id === 'product-modal') hideProductModal()" class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="bg-[#0F2E26] max-w-3xl w-full rounded-3xl overflow-hidden premium-shadow">
+            <div class="grid md:grid-cols-5">
+                <!-- Image -->
+                <div class="md:col-span-3 relative">
+                    <img id="modal-image" class="w-full h-full object-cover" alt="">
+                    <div class="absolute top-4 left-4">
+                        <div id="modal-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-black/60 backdrop-blur"></div>
+                    </div>
+                </div>
+                
+                <!-- Details -->
+                <div class="md:col-span-2 p-8 flex flex-col">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div id="modal-brand" class="text-xs tracking-widest text-[#C9A962]"></div>
+                            <div id="modal-name" class="text-3xl font-bold leading-none mt-1"></div>
+                        </div>
+                        <button onclick="hideProductModal()" class="text-white/50 hover:text-white text-3xl leading-none">×</button>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center gap-x-3">
+                        <div id="modal-price" class="text-3xl font-semibold"></div>
+                        <div id="modal-weight" class="text-sm px-3 py-px bg-white/10 rounded text-white/60"></div>
+                    </div>
+                    
+                    <div id="modal-desc" class="mt-6 text-sm text-white/80 leading-relaxed"></div>
+                    
+                    <div class="mt-auto">
+                        <div class="flex items-center justify-between text-xs mb-1.5 px-1">
+                            <div>QUANTITY</div>
+                            <div id="modal-stock" class="text-emerald-400 font-medium"></div>
+                        </div>
+                        
+                        <div class="flex items-center gap-x-4">
+                            <div class="flex-1 flex items-center border border-white/20 rounded-2xl">
+                                <button onclick="changeModalQuantity(-1)" class="px-4 py-3 text-xl hover:bg-white/5 active:bg-white/10 rounded-l-2xl transition">-</button>
+                                <div id="modal-quantity" class="flex-1 text-center font-semibold text-lg">1</div>
+                                <button onclick="changeModalQuantity(1)" class="px-4 py-3 text-xl hover:bg-white/5 active:bg-white/10 rounded-r-2xl transition">+</button>
+                            </div>
+                            
+                            <button onclick="addCurrentProductToCart()" 
+                                    class="flex-1 bg-[#C9A962] hover:bg-[#D8B97A] active:scale-[0.985] transition-all text-[#0F2E26] font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span>ADD TO CART</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CART SLIDE-IN -->
+    <div id="cart-panel" onclick="if (event.target.id === 'cart-panel') hideCart()" class="hidden fixed inset-0 bg-black/60 z-[110]">
+        <div onclick="event.stopImmediatePropagation()" class="absolute right-0 top-0 h-full w-full max-w-md bg-[#0F2E26] shadow-2xl flex flex-col cart-slide">
+            <!-- Cart Header -->
+            <div class="px-6 py-5 border-b border-white/10 flex justify-between items-center">
+                <div>
+                    <div class="font-semibold text-xl">Your Cart</div>
+                    <div id="cart-items-count" class="text-xs text-white/50"></div>
+                </div>
+                <button onclick="hideCart()" class="text-3xl text-white/40 hover:text-white">×</button>
+            </div>
+            
+            <!-- Cart Items -->
+            <div id="cart-items" class="flex-1 overflow-auto p-6 space-y-5 custom-scroll">
+                <!-- Populated by JS -->
+            </div>
+            
+            <!-- Cart Footer -->
+            <div class="border-t border-white/10 p-6">
+                <div class="flex justify-between text-sm mb-1">
+                    <div class="text-white/60">Subtotal</div>
+                    <div id="cart-subtotal" class="font-semibold"></div>
+                </div>
+                <div class="flex justify-between text-xs text-white/50 mb-4">
+                    <div>Shipping</div>
+                    <div class="text-emerald-400">Calculated at checkout</div>
+                </div>
+                
+                <button onclick="proceedToCheckout()" 
+                        class="w-full py-4 bg-[#C9A962] hover:bg-[#D8B97A] active:scale-[0.985] transition-all text-[#0F2E26] font-semibold rounded-2xl flex items-center justify-center gap-x-2 text-lg">
+                    PROCEED TO CHECKOUT
+                </button>
+                
+                <div class="text-center text-[10px] text-white/40 mt-3">or 4 interest-free payments of RXX with PayFast</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#C9A962');
+        }
+        
+        // Products Data
+        let products = [
+            {
+                id: 1,
+                name: "Durban Poison",
+                category: "flower",
+                type: "Premium Flower",
+                price: 449,
+                weight: "3.5g",
+                image: "https://picsum.photos/id/1074/600/600",
+                badge: "BESTSELLER",
+                desc: "Our flagship South African landrace. Bright, uplifting, and incredibly fragrant with classic earthy-citrus notes. Perfect for daytime creativity and focus.",
+                thc: "22%",
+                cbd: "<1%",
+                effects: "Energetic • Focused • Creative",
+                stock: 47
+            },
+            {
+                id: 2,
+                name: "Cape Chem",
+                category: "flower",
+                type: "Premium Flower",
+                price: 529,
+                weight: "3.5g",
+                image: "https://picsum.photos/id/106/600/600",
+                badge: "SIGNATURE",
+                desc: "Our proprietary hybrid. Dense, trichome-heavy buds with sweet berry and fuel undertones. Delivers a perfect balance of euphoria and deep body relaxation.",
+                thc: "24%",
+                cbd: "1.2%",
+                effects: "Balanced • Euphoric • Relaxing",
+                stock: 32
+            },
+            {
+                id: 3,
+                name: "Apex OG",
+                category: "flower",
+                type: "Premium Flower",
+                price: 649,
+                weight: "7g",
+                image: "https://picsum.photos/id/1080/600/600",
+                badge: "LIMITED",
+                desc: "Our most potent offering. Heavy, resinous buds with classic OG gas and pine. Ideal for experienced users seeking profound relaxation and pain relief.",
+                thc: "26%",
+                cbd: "<1%",
+                effects: "Deep Body High • Sedating • Therapeutic",
+                stock: 18
+            },
+            {
+                id: 4,
+                name: "Blue Cheese Pre-Rolls",
+                category: "preroll",
+                type: "Pre-Rolls",
+                price: 189,
+                weight: "Pack of 5",
+                image: "https://picsum.photos/id/292/600/600",
+                badge: "",
+                desc: "Hand-rolled with our Blue Cheese flower. Creamy, sweet berry aroma with a smooth smoke. Perfect for social settings or winding down.",
+                thc: "18%",
+                cbd: "0.8%",
+                effects: "Relaxed • Happy • Social",
+                stock: 65
+            },
+            {
+                id: 5,
+                name: "Swazi Gold Pre-Rolls",
+                category: "preroll",
+                type: "Pre-Rolls",
+                price: 169,
+                weight: "Pack of 5",
+                image: "https://picsum.photos/id/201/600/600",
+                badge: "",
+                desc: "Sweet, earthy, and incredibly smooth. Our Swazi Gold pre-rolls are a customer favourite for their gentle onset and long-lasting calm.",
+                thc: "19%",
+                cbd: "1.1%",
+                effects: "Calm • Grounded • Creative",
+                stock: 41
+            },
+            {
+                id: 6,
+                name: "Kite Live Rosin",
+                category: "concentrate",
+                type: "Concentrate",
+                price: 899,
+                weight: "1g",
+                image: "https://picsum.photos/id/160/600/600",
+                badge: "PREMIUM",
+                desc: "Fresh-frozen, solventless live rosin made from our finest Apex OG. Terpene-rich and incredibly potent. The pinnacle of our extraction line.",
+                thc: "78%",
+                cbd: "2%",
+                effects: "Intense • Full Spectrum • Clean",
+                stock: 24
+            },
+            {
+                id: 7,
+                name: "Durban Poison Pre-Rolls",
+                category: "preroll",
+                type: "Pre-Rolls",
+                price: 179,
+                weight: "Pack of 5",
+                image: "https://picsum.photos/id/107/600/600",
+                badge: "",
+                desc: "Classic Durban Poison in convenient pre-roll format. Bright, citrus-forward, and energising. Perfect for daytime use or creative work.",
+                thc: "22%",
+                cbd: "<1%",
+                effects: "Uplifting • Focused • Clear",
+                stock: 53
+            },
+            {
+                id: 8,
+                name: "Full-Spectrum Oil 30ml",
+                category: "concentrate",
+                type: "Oil",
+                price: 649,
+                weight: "30ml",
+                image: "https://picsum.photos/id/1060/600/600",
+                badge: "",
+                desc: "Our most popular medicinal offering. Full-spectrum oil extracted from our Swazi Gold and Cape Chem blend. Ideal for daily wellness and sleep support.",
+                thc: "15%",
+                cbd: "8%",
+                effects: "Therapeutic • Balanced • Restorative",
+                stock: 29
+            }
+        ]
+        
+        let cart = []
+        
+        // Render Products
+        function renderProducts(filteredProducts = products) {
+            const grid = document.getElementById('products-grid')
+            grid.innerHTML = ''
+            
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div')
+                card.className = `product-card bg-[#0F2E26] border border-white/10 rounded-3xl overflow-hidden group cursor-pointer`
+                card.innerHTML = `
+                    <div class="relative overflow-hidden h-72">
+                        <img src="${product.image}" alt="${product.name}" class="product-img w-full h-full object-cover">
+                        
+                        ${product.badge ? `
+                        <div class="absolute top-4 left-4">
+                            <div class="px-3 py-1 text-xs font-semibold tracking-wider bg-black/70 backdrop-blur rounded-full">${product.badge}</div>
+                        </div>` : ''}
+                        
+                        <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-xs font-medium flex items-center gap-x-1">
+                            <span>${product.weight}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="text-xs text-[#C9A962] tracking-widest">${product.type}</div>
+                                <div class="font-semibold text-xl mt-1">${product.name}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold text-xl">R${product.price}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-5">
+                            <div class="text-xs text-white/50">${product.thc} THC</div>
+                            
+                            <div class="flex items-center gap-x-3">
+                                <button onclick="event.stopImmediatePropagation(); quickAddToCart(${product.id})" 
+                                        class="px-4 py-1.5 text-xs font-medium border border-[#C9A962]/40 hover:bg-[#C9A962] hover:text-[#0F2E26] rounded-2xl transition flex items-center gap-x-1.5">
+                                    <i class="fa-solid fa-plus text-xs"></i>
+                                    <span>Quick Add</span>
+                                </button>
+                                
+                                <button onclick="event.stopImmediatePropagation(); showProductModal(${product.id})" 
+                                        class="px-4 py-1.5 text-xs font-medium border border-white/20 hover:bg-white/5 rounded-2xl transition">
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+                
+                card.onclick = () => showProductModal(product.id)
+                grid.appendChild(card)
+            })
+        }
+        
+        // Filter Products
+        let currentFilter = 'all'
+        
+        function filterProducts(category) {
+            currentFilter = category
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-[#C9A962]', 'text-[#0F2E26]')
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.classList.add('active', 'bg-[#C9A962]', 'text-[#0F2E26]')
+                }
+            })
+            
+            let filtered = products
+            if (category !== 'all') {
+                filtered = products.filter(p => p.category === category)
+            }
+            
+            renderProducts(filtered)
+        }
+        
+        // Search
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input')
+            
+            searchInput.addEventListener('input', () => {
+                const term = searchInput.value.toLowerCase().trim()
+                
+                let filtered = products
+                
+                if (currentFilter !== 'all') {
+                    filtered = filtered.filter(p => p.category === currentFilter)
+                }
+                
+                if (term.length > 0) {
+                    filtered = filtered.filter(p => 
+                        p.name.toLowerCase().includes(term) || 
+                        p.desc.toLowerCase().includes(term) ||
+                        p.type.toLowerCase().includes(term)
+                    )
+                }
+                
+                renderProducts(filtered)
+            })
+        }
+        
+        // Product Modal
+        let currentProduct = null
+        let modalQuantity = 1
+        
+        function showProductModal(productId) {
+            currentProduct = products.find(p => p.id === productId)
+            if (!currentProduct) return
+            
+            modalQuantity = 1
+            
+            document.getElementById('modal-image').src = currentProduct.image
+            document.getElementById('modal-name').innerText = currentProduct.name
+            document.getElementById('modal-brand').innerText = currentProduct.type.toUpperCase()
+            document.getElementById('modal-price').innerText = `R${currentProduct.price}`
+            document.getElementById('modal-weight').innerText = currentProduct.weight
+            document.getElementById('modal-desc').innerText = currentProduct.desc
+            document.getElementById('modal-stock').innerText = `${currentProduct.stock} in stock`
+            document.getElementById('modal-quantity').innerText = modalQuantity
+            
+            // Badge
+            const badgeEl = document.getElementById('modal-badge')
+            if (currentProduct.badge) {
+                badgeEl.innerHTML = currentProduct.badge
+                badgeEl.style.display = 'inline-flex'
+            } else {
+                badgeEl.style.display = 'none'
+            }
+            
+            document.getElementById('product-modal').classList.remove('hidden')
+            document.getElementById('product-modal').classList.add('flex')
+        }
+        
+        function hideProductModal() {
+            const modal = document.getElementById('product-modal')
+            modal.classList.remove('flex')
+            modal.classList.add('hidden')
+        }
+        
+        function changeModalQuantity(change) {
+            modalQuantity = Math.max(1, Math.min(10, modalQuantity + change))
+            document.getElementById('modal-quantity').innerText = modalQuantity
+        }
+        
+        function addCurrentProductToCart() {
+            if (!currentProduct) return
+            addToCart(currentProduct.id, modalQuantity)
+            hideProductModal()
+        }
+        
+        // Quick Add
+        function quickAddToCart(productId) {
+            addToCart(productId, 1)
+            
+            // Little animation feedback
+            const btns = document.querySelectorAll(`[onclick*="quickAddToCart(${productId})"]`)
+            btns.forEach(btn => {
+                const originalText = btn.innerHTML
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Added!</span>`
+                btn.style.background = '#C9A962'
+                btn.style.color = '#0F2E26'
+                
+                setTimeout(() => {
+                    if (btn) {
+                        btn.innerHTML = originalText
+                        btn.style.background = ''
+                        btn.style.color = ''
+                    }
+                }, 1200)
+            })
+        }
+        
+        // Cart Functions
+        function addToCart(productId, qty = 1) {
+            const product = products.find(p => p.id === productId)
+            if (!product) return
+            
+            const existing = cart.findIndex(item => item.id === productId)
+            
+            if (existing > -1) {
+                cart[existing].qty += qty
+            } else {
+                cart.push({...product, qty: qty})
+            }
+            
+            updateCartCount()
+            
+            // Toast notification
+            showToast(`${qty}× ${product.name} added to cart`)
+        }
+        
+        function updateCartCount() {
+            const countEl = document.getElementById('cart-count')
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0)
+            countEl.innerText = totalItems
+            countEl.style.display = totalItems > 0 ? 'flex' : 'none'
+        }
+        
+        function showCart() {
+            const panel = document.getElementById('cart-panel')
+            const itemsContainer = document.getElementById('cart-items')
+            
+            itemsContainer.innerHTML = ''
+            
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full py-16 text-center">
+                        <i class="fa-solid fa-shopping-bag text-6xl text-white/20 mb-4"></i>
+                        <div class="text-xl font-medium">Your cart is empty</div>
+                        <div class="text-sm text-white/50 mt-2 max-w-[180px]">When you add products they’ll appear here</div>
+                    </div>
+                `
+            } else {
+                cart.forEach((item, index) => {
+                    const itemEl = document.createElement('div')
+                    itemEl.className = 'flex gap-x-4'
+                    itemEl.innerHTML = `
+                        <div class="w-20 h-20 flex-shrink-0 rounded-2xl overflow-hidden border border-white/10">
+                            <img src="${item.image}" class="w-full h-full object-cover" alt="">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between">
+                                <div class="font-medium">${item.name}</div>
+                                <div class="font-semibold">R${item.price * item.qty}</div>
+                            </div>
+                            <div class="text-xs text-white/50">${item.weight}</div>
+                            
+                            <div class="flex items-center justify-between mt-3">
+                                <div class="flex items-center border border-white/20 rounded-xl">
+                                    <button onclick="changeCartQuantity(${index}, -1)" class="px-2.5 py-px text-lg leading-none hover:bg-white/5 rounded-l-xl">-</button>
+                                    <div class="px-3 text-sm font-medium">${item.qty}</div>
+                                    <button onclick="changeCartQuantity(${index}, 1)" class="px-2.5 py-px text-lg leading-none hover:bg-white/5 rounded-r-xl">+</button>
+                                </div>
+                                
+                                <button onclick="removeFromCart(${index})" class="text-xs text-red-400 hover:text-red-300 flex items-center gap-x-1">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                    <span>Remove</span>
+                                </button>
+                            </div>
+                        </div>
+                    `
+                    itemsContainer.appendChild(itemEl)
+                })
+            }
+            
+            updateCartTotals()
+            panel.style.display = 'block'
+        }
+        
+        function hideCart() {
+            document.getElementById('cart-panel').style.display = 'none'
+        }
+        
+        function changeCartQuantity(index, change) {
+            cart[index].qty += change
+            if (cart[index].qty < 1) cart[index].qty = 1
+            showCart()
+            updateCartCount()
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1)
+            showCart()
+            updateCartCount()
+        }
+        
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0)
+            document.getElementById('cart-subtotal').innerText = `R${subtotal}`
+            document.getElementById('cart-items-count').innerText = `${cart.length} item${cart.length !== 1 ? 's' : ''}`
+        }
+        
+        // Checkout
+        function proceedToCheckout() {
+            hideCart()
+            
+            const checkoutHTML = `
+                <div id="checkout-modal" class="fixed inset-0 bg-black/90 z-[120] flex items-center justify-center p-4">
+                    <div class="bg-[#0F2E26] max-w-2xl w-full rounded-3xl overflow-hidden">
+                        <!-- Progress -->
+                        <div class="px-8 pt-8">
+                            <div class="flex justify-between text-xs mb-2 px-1">
+                                <div class="font-medium text-[#C9A962]">1. Review</div>
+                                <div class="font-medium text-white/40">2. Shipping</div>
+                                <div class="font-medium text-white/40">3. Payment</div>
+                            </div>
+                            <div class="h-px bg-white/10 relative">
+                                <div class="absolute left-0 top-0 h-px bg-[#C9A962] w-1/3 transition-all" id="progress-bar"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-8" id="checkout-content">
+                            <!-- Step 1: Review -->
+                            <div id="step-review">
+                                <h3 class="font-semibold text-2xl mb-6">Review your order</h3>
+                                
+                                <div id="checkout-items" class="space-y-4 mb-8"></div>
+                                
+                                <div class="border-t border-white/10 pt-5">
+                                    <div class="flex justify-between text-lg font-semibold">
+                                        <div>Total</div>
+                                        <div id="checkout-total"></div>
+                                    </div>
+                                </div>
+                                
+                                <button onclick="goToShippingStep()" 
+                                        class="mt-8 w-full py-4 bg-[#C9A962] hover:bg-[#D8B97A] text-[#0F2E26] font-semibold rounded-2xl text-lg active:scale-[0.985]">
+                                    CONTINUE TO SHIPPING
+                                </button>
+                            </div>
+                            
+                            <!-- Step 2: Shipping -->
+                            <div id="step-shipping" class="hidden">
+                                <h3 class="font-semibold text-2xl mb-6">Shipping details</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-xs text-white/60 block mb-1">FIRST NAME</label>
+                                        <input type="text" value="Gerard" class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-white/60 block mb-1">LAST NAME</label>
+                                        <input type="text" value="van der Merwe" class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="text-xs text-white/60 block mb-1">STREET ADDRESS</label>
+                                        <input type="text" value="12 Kloof Street" class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-white/60 block mb-1">CITY</label>
+                                        <input type="text" value="Cape Town" class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-white/60 block mb-1">PROVINCE</label>
+                                        <select class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                            <option>Western Cape</option>
+                                            <option>Gauteng</option>
+                                            <option>KwaZulu-Natal</option>
+                                            <option>Eastern Cape</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-white/60 block mb-1">POSTAL CODE</label>
+                                        <input type="text" value="8001" class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-white/60 block mb-1">PHONE</label>
+                                        <input type="tel" value="+27 82 555 1234" class="w-full bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-sm focus:border-[#C9A962]">
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-x-4 mt-8">
+                                    <button onclick="goBackToReview()" class="flex-1 py-4 border border-white/30 rounded-2xl font-medium">BACK</button>
+                                    <button onclick="goToPaymentStep()" class="flex-1 py-4 bg-[#C9A962] hover:bg-[#D8B97A] text-[#0F2E26] font-semibold rounded-2xl">CONTINUE TO PAYMENT</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Payment -->
+                            <div id="step-payment" class="hidden">
+                                <h3 class="font-semibold text-2xl mb-6">Payment</h3>
+                                
+                                <div class="space-y-3 mb-6">
+                                    <div class="border border-[#C9A962] rounded-2xl p-4 flex items-center gap-x-3">
+                                        <i class="fa-brands fa-cc-visa text-3xl text-[#C9A962]"></i>
+                                        <div class="flex-1">
+                                            <div class="font-medium">Credit / Debit Card</div>
+                                            <div class="text-xs text-white/50">Visa, Mastercard, Amex</div>
+                                        </div>
+                                        <i class="fa-solid fa-check-circle text-[#C9A962]"></i>
+                                    </div>
+                                    
+                                    <div class="border border-white/20 hover:border-white/40 transition-colors rounded-2xl p-4 flex items-center gap-x-3 cursor-pointer">
+                                        <i class="fa-solid fa-university text-2xl"></i>
+                                        <div class="flex-1">
+                                            <div class="font-medium">EFT / Instant EFT</div>
+                                            <div class="text-xs text-white/50">PayFast • Ozow • SnapScan</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white/5 rounded-2xl p-5 text-sm">
+                                    <div class="font-medium mb-3">Card Details (Demo)</div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <div class="text-xs text-white/60 mb-1">CARD NUMBER</div>
+                                            <div class="font-mono bg-white/10 px-4 py-2.5 rounded-xl">4242 4242 4242 4242</div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div>
+                                                <div class="text-xs text-white/60 mb-1">EXPIRY</div>
+                                                <div class="font-mono bg-white/10 px-4 py-2.5 rounded-xl">02 / 28</div>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs text-white/60 mb-1">CVV</div>
+                                                <div class="font-mono bg-white/10 px-4 py-2.5 rounded-xl">424</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button onclick="completeOrder()" 
+                                        class="mt-8 w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-2xl text-lg active:scale-[0.985]">
+                                    PAY R${cart.reduce((sum, item) => sum + (item.price * item.qty), 0)} NOW
+                                </button>
+                                
+                                <div class="text-center text-xs text-white/40 mt-4">Secure checkout powered by PayFast • 256-bit SSL</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+            
+            document.body.insertAdjacentHTML('beforeend', checkoutHTML)
+            
+            // Populate review step
+            populateCheckoutReview()
+        }
+        
+        function populateCheckoutReview() {
+            const container = document.getElementById('checkout-items')
+            container.innerHTML = ''
+            
+            let total = 0
+            
+            cart.forEach(item => {
+                total += item.price * item.qty
+                
+                const el = document.createElement('div')
+                el.className = 'flex gap-x-4'
+                el.innerHTML = `
+                    <img src="${item.image}" class="w-16 h-16 rounded-2xl object-cover flex-shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="font-medium">${item.name}</div>
+                                <div class="text-xs text-white/50">${item.weight} × ${item.qty}</div>
+                            </div>
+                                <div class="font-semibold">R${item.price * item.qty}</div>
+                        </div>
+                    </div>
+                `
+                container.appendChild(el)
+            })
+            
+            document.getElementById('checkout-total').innerText = `R${total}`
+        }
+        
+        function goToShippingStep() {
+            document.getElementById('step-review').classList.add('hidden')
+            document.getElementById('step-shipping').classList.remove('hidden')
+            document.getElementById('progress-bar').style.width = '66%'
+        }
+        
+        function goBackToReview() {
+            document.getElementById('step-shipping').classList.add('hidden')
+            document.getElementById('step-review').classList.remove('hidden')
+            document.getElementById('progress-bar').style.width = '33%'
+        }
+        
+        function goToPaymentStep() {
+            document.getElementById('step-shipping').classList.add('hidden')
+            document.getElementById('step-payment').classList.remove('hidden')
+            document.getElementById('progress-bar').style.width = '100%'
+        }
+        
+        function completeOrder() {
+            const modal = document.getElementById('checkout-modal')
+            
+            modal.innerHTML = `
+                <div class="max-w-md w-full text-center px-8">
+                    <div class="mx-auto w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center mb-8">
+                        <i class="fa-solid fa-check text-emerald-400 text-5xl"></i>
+                    </div>
+                    
+                    <div class="text-4xl font-bold tracking-tight">Order placed successfully!</div>
+                    <div class="text-white/60 mt-3">Thank you for choosing Kite. Your order #KT-2026${Math.floor(Math.random()*90000)+10000} has been confirmed.</div>
+                    
+                    <div class="mt-10 bg-white/5 rounded-3xl p-6 text-left text-sm">
+                        <div class="font-medium mb-2">What happens next?</div>
+                        <div class="text-white/60 space-y-1">
+                            <div>• Order confirmation sent to your email</div>
+                            <div>• Dispatch within 24 hours (Mon–Fri)</div>
+                            <div>• Tracking link sent via SMS &amp; email</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="finishOrder()" 
+                            class="mt-8 w-full py-4 bg-white text-[#0F2E26] font-semibold rounded-2xl">
+                        BACK TO SHOP
+                    </button>
+                </div>
+            `
+            
+            // Confetti
+            launchConfetti()
+        }
+        
+        function finishOrder() {
+            // Clear cart
+            cart = []
+            updateCartCount()
+            
+            // Remove modal
+            const modal = document.getElementById('checkout-modal')
+            if (modal) modal.remove()
+            
+            // Show success toast
+            showToast("Thank you! We'll be in touch shortly.", true)
+        }
+        
+        function launchConfetti() {
+            const colors = ['#C9A962', '#0F2E26', '#E8E4D9']
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const confetto = document.createElement('div')
+                    confetto.style.position = 'fixed'
+                    confetto.style.left = Math.random() * 100 + 'vw'
+                    confetto.style.top = '-20px'
+                    confetto.style.width = '8px'
+                    confetto.style.height = '8px'
+                    confetto.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px'
+                    confetto.style.background = colors[Math.floor(Math.random() * colors.length)]
+                    confetto.style.zIndex = '99999'
+                    confetto.style.opacity = Math.random() + 0.6
+                    document.body.appendChild(confetto)
+                    
+                    const duration = Math.random() * 2800 + 2200
+                    confetto.animate([
+                        { transform: `translateY(0) rotate(0deg)`, opacity: confetto.style.opacity },
+                        { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random()*720 - 200}deg)`, opacity: 0 }
+                    ], {
+                        duration: duration,
+                        easing: 'cubic-bezier(.22,1,.3,1)'
+                    }).onfinish = () => confetto.remove()
+                }, i * 0.8)
+            }
+        }
+        
+        // Toast
+        function showToast(message, long = false) {
+            const toast = document.createElement('div')
+            toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#0F2E26] border border-[#C9A962]/50 text-sm px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-x-3 z-[200]`
+            toast.innerHTML = `
+                <i class="fa-solid fa-check-circle text-[#C9A962]"></i>
+                <span>${message}</span>
+            `
+            document.body.appendChild(toast)
+            
+            setTimeout(() => {
+                toast.style.transition = 'all 0.4s ease'
+                toast.style.opacity = '0'
+                toast.style.transform = 'translate(-50%, 20px)'
+                
+                setTimeout(() => toast.remove(), 400)
+            }, long ? 4200 : 2400)
+        }
+        
+        // Navbar scroll effect
+        function setupNavbar() {
+            const nav = document.getElementById('nav')
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 80) {
+                    nav.classList.add('nav-scrolled', 'shadow-xl')
+                } else {
+                    nav.classList.remove('nav-scrolled', 'shadow-xl')
+                }
+            })
+        }
+        
+        // Initialize everything
+        function initializeSite() {
+            initializeTailwind()
+            
+            // Render initial products
+            renderProducts()
+            
+            // Setup search
+            setupSearch()
+            
+            // Navbar
+            setupNavbar()
+            
+            // Initial cart count
+            updateCartCount()
+            
+            // Make filter buttons active
+            const allBtn = document.querySelector('.filter-btn[data-filter="all"]')
+            if (allBtn) allBtn.classList.add('active', 'bg-[#C9A962]', 'text-[#0F2E26]')
+            
+            // Keyboard support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault()
+                    document.getElementById('search-input').focus()
+                }
+                if (e.key === 'Escape') {
+                    const modals = document.querySelectorAll('#product-modal, #cart-panel, #checkout-modal')
+                    modals.forEach(m => {
+                        if (!m.classList.contains('hidden') && m.style.display !== 'none') {
+                            if (m.id === 'product-modal') hideProductModal()
+                            else if (m.id === 'cart-panel') hideCart()
+                            else m.remove()
+                        }
+                    })
+                }
+            })
+            
+            // Welcome toast (once)
+            setTimeout(() => {
+                if (!localStorage.getItem('kite_welcome_shown')) {
+                    // showToast("Welcome to Kite • South Africa's most reliable cannabis supplier")
+                    localStorage.setItem('kite_welcome_shown', 'true')
+                }
+            }, 1800)
+            
+            console.log('%c[Kite Ecommerce] Premium site initialized successfully.', 'color:#C9A962')
+        }
+        
+        // Boot the site
+        window.onload = initializeSite
+    </script>
+</body>
+</html>
